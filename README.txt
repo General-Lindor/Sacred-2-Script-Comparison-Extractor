@@ -1,5 +1,8 @@
 Extractor to compare and extract differences between the lua scripts of two different versions of Sacred 2.
 
+usage: just put the scripts of one version into ORIGINAL/ and one into MODIFIED/ and start the exe, it will extract the differences.
+only works on windows OS for now.
+
 can extract:
     - behaviour.txt
     - client
@@ -45,9 +48,3 @@ cannot extract:
     - shared
         - defines.txt
         - staticinfo.txt
-
-Note:
-The files that can be extracted are a whitelist.
-Any files not listed under "can extract" cannot be extracted.
-The files listed under "cannot extract" refer to files which will never be able to be extracted even in future versions of this tool,
-due to programmatical limitations. It does NOT mean that it might be able to extract files not listed under "cannot extract".
