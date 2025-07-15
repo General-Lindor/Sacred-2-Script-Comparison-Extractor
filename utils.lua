@@ -21,17 +21,20 @@ function checkMultiline(t)
     if type_t ~= "table" then
         do error("checkHasTables requires a table as input, "..type_t.." given") end
     end
-    local itemCount = 0
+    local characterCount = 0
     for k, v in pairs(t) do
-        do itemCount = itemCount + 1 end
         if type(k) == "table" then
             do return true end
         end
         if type(v) == "table" then
             do return true end
         end
+        do characterCount = characterCount + string.len(serialize(k)) + string.len(serialize(v)) + 5 end
+        if characterCount > 150 then
+            do return true end
+        end
     end
-    do return itemCount > 3 end
+    do return false end
 end
 
 -- any, string, boolean, boolean => string
