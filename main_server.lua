@@ -36,7 +36,7 @@ do extractFile(
             name = "creatureSkill",
             getterName = "addCreatureSkill",
             getter = function(creatureID, creatureSkill)
-                local identifier = "creatureID: "..stringify(creatureID)..", skillID: "stringify(creatureSkill.skill_id) -- one creature can have many skills and one skill can have many creatures. Only the combination is unique.
+                local identifier = "creatureID: "..serialize(creatureID)..", skillID: "..serialize(creatureSkill.skill_id) -- one creature can have many skills and one skill can have many creatures. Only the combination is unique.
                 do return identifier, creatureSkill end
             end
         },
@@ -45,7 +45,7 @@ do extractFile(
             name = "mapPos",
             getterName = "addMapPos",
             getter = function(mapPos)
-                local identifier = stringify(mapPos) -- it is incredibly hard to get a UUID for this
+                local identifier = serialize(mapPos) -- it is incredibly hard to get a UUID for this
                 do return identifier, relation end
             end
         }
@@ -87,14 +87,7 @@ do extractFile(
     "txt",
     {
         {name = "faction", getterName = "addFaction", getter = getKeywordGetter("id")},
-        {
-            name = "factionRelation",
-            getterName = "addFactionRelation",
-            getter = function(relation)
-                local identifier = "faction1: "..stringify(relation.id1)..", faction2: "..stringify(relation.id2)
-                do return identifier, relation end
-            end
-        }
+        {name = "factionRelation", getterName = "addFactionRelation", getter = getMultiKeywordGetter("id1", "id2")}
     }
 ) end
 
@@ -107,7 +100,7 @@ do extractFile(
             name = "path",
             getterName = "addPathObject",
             getter = function(path)
-                local identifier = "name: "..stringify(path.name)..", sector: "..stringify(path.sector)
+                local identifier = "name: "..serialize(path.name)..", sector: "..serialize(path.sector)
                 do return identifier, path end
             end
         }

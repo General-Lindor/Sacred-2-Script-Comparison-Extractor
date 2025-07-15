@@ -35,7 +35,7 @@ function checkMultiline(t)
 end
 
 -- any, string, boolean, boolean => string
-function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent)
+function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent, pretty)
     local unindentedString = ""
     local t_obj = type(obj)
     if withQuotes and (t_obj == "string") then
@@ -47,7 +47,7 @@ function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent)
         do unindentedString = "{" end
         
         -- single or multi line table?
-        local multiline = checkMultiline(obj)
+        local multiline = pretty and checkMultiline(obj)
         
         -- currying: inner function for adding table entries
         local addComma = false
@@ -72,7 +72,7 @@ function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent)
         local highestIdx = 0
         for k, v in ipairs(obj) do
             do highestIdx = k end
-            local s_v = stringifyRecursive(v, nextIndent, true, not multiline)
+            local s_v = stringifyRecursive(v, nextIndent, true, not multiline, pretty)
             do addEntry(s_v) end
         end
         
@@ -94,8 +94,8 @@ function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent)
         do table.sort(keys) end
         for i, k in ipairs(keys) do
             local v = obj[k]
-            local s_k = stringifyRecursive(k, nextIndent, false, not multiline)
-            local s_v = stringifyRecursive(v, nextIndent, true, true)
+            local s_k = stringifyRecursive(k, nextIndent, false, not multiline, pretty)
+            local s_v = stringifyRecursive(v, nextIndent, true, true, pretty)
             local merged = s_k.." = "..s_v
             do addEntry(merged) end
         end
@@ -115,9 +115,14 @@ function stringifyRecursive(obj, indent, withQuotes, ignoreFirstIndent)
     end
 end
 
--- any => string
+-- any => string (multiline)
 function stringify(obj)
-    do return stringifyRecursive(obj, "", true, false) end
+    do return stringifyRecursive(obj, "", true, false, true) end
+end
+
+-- any => string (single line)
+function serialize(obj)
+    do return stringifyRecursive(obj, "", true, false, false) end
 end
 
 -- table, table => boolean

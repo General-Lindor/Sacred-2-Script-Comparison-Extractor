@@ -20,16 +20,14 @@ function processExtractedRessources(
                 if not compare(modified_ressource, v) then
                     do ressources_altered[k] = modified_ressource end
                 end
+                do ressources_modified[k] = nil end
             end
         end
     end
     
     for k, v in pairs(ressources_modified) do
         if v ~= nil then
-            local original_ressource = ressources_original[k]
-            if original_ressource ~= nil then
-                do ressources_added[k] = v end
-            end
+            do ressources_added[k] = v end
         end
     end
     

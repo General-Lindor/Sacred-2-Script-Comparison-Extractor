@@ -7,6 +7,14 @@ can extract:
     - behaviour.txt
     - client
         - animation.txt
+        - collision.txt
+        - Eliza.txt
+        - environment.txt
+        - minitype.txt
+        - patches.txt
+        - poidata.txt
+        - relations.txt
+        - soundcluster.txt
         - soundprofile.txt
         - surface.txt
     - server
@@ -36,6 +44,8 @@ can extract:
 cannot extract:
     - the particle files
     - autoexec.txt
+    - client
+        keycodes.txt
     - server
         - questscripts.txt
         - quest.txt
